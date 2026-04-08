@@ -1,3 +1,4 @@
+import 'package:chat_demo/feature/presentation/widget/chat_list.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
@@ -5,6 +6,9 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(title: Text("Chat Screen"),),
+      body: Chats()
+    );
   }
 }
