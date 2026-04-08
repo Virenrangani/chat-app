@@ -13,6 +13,6 @@ class ChatUserTile extends StatelessWidget {
       subtitle: Text(user["message"]),
       trailing: Text(AppDate.hourMinuteFormat),
       onTap: (){},
-    );;
+    );
   }
 }
