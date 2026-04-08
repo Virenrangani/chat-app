@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
 
-class AppDate {
-  static String hourMinuteFormat=DateFormat('hh:mm a').format(DateTime.now());
+class DateFormatter {
+  static String hourMinuteFormat(DateTime dateTime) => DateFormat('hh:mm a').format(dateTime);
 }
