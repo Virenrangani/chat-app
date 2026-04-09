@@ -6,6 +6,7 @@ import 'package:chat_demo/feature/presentation/widget/chat/audio_chat.dart';
 import 'package:chat_demo/feature/presentation/widget/chat/image_chat.dart';
 import 'package:chat_demo/feature/presentation/widget/chat/video_chat.dart';
 import 'package:chat_demo/feature/presentation/widget/chat_option.dart';
+import 'package:chat_demo/feature/presentation/widget/select_media_file.dart';
 import 'package:chat_demo/feature/presentation/widget/user_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,14 +51,7 @@ class _UserChatPageState extends State<UserChatPage> {
                   ),
                 ),
 
-                if (state.selectedImage != null)
-                  ImageChat(state:state,chatCubit:chatCubit),
-
-                if (state.selectedAudio != null)
-                  AudioChat(state: state, chatCubit: chatCubit),
-
-                if (state.selectedVideo != null)
-                  VideoChat(state: state, chatCubit: chatCubit),
+                SelectMediaFile(state: state, chatCubit: chatCubit),
 
                 Padding(
                   padding: AppPadding.edgeAll20,
