@@ -12,24 +12,30 @@ class ChatOption extends StatelessWidget {
       padding: AppPadding.edgeAll16,
       decoration: BoxDecoration(
         borderRadius: AppBorderRadius.verTop12,
-        color: AppColor.primary,
+        color: AppColor.textWhite,
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
 
           IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.edit),
+            icon: Icon(Icons.image),
           ),
 
           IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: const Icon(Icons.delete),
+            icon: const Icon(Icons.audio_file),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.videocam_outlined),
           ),
         ],
       ),
