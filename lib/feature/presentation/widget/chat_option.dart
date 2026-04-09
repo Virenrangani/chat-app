@@ -1,8 +1,8 @@
 import 'package:chat_demo/core/constant/colour/app_color.dart';
-import 'package:chat_demo/core/util/image_picker/custom_image_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constant/border_radius/app_border_radius.dart';
 import '../../../core/constant/padding/app_padding.dart';
+import '../../../core/util/audio_picker/app_audio_picker.dart';
 
 class ChatOption extends StatelessWidget {
   const ChatOption({super.key});
@@ -19,30 +19,36 @@ class ChatOption extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
 
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Future.delayed(Duration(milliseconds: 200), () {
-                CustomImagePicker.show(context);
-              });
-              },
-            icon: Icon(Icons.image),
-          ),
+          commonIconButton(Icons.image, () {
+            Navigator.pop(context);
+            Future.delayed(const Duration(milliseconds: 200), () {
+              AppPicker.showImagePicker(context);
+            });
+          }),
 
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.audio_file),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.videocam_outlined),
-          ),
+          commonIconButton(Icons.audio_file, () {
+            Navigator.pop(context);
+            Future.delayed(const Duration(milliseconds: 200), () {
+              AppPicker.showAudioPicker(context);
+            });
+          }),
+
+          commonIconButton(Icons.videocam_outlined, () {
+            Navigator.pop(context);
+            Future.delayed(const Duration(milliseconds: 200), () {
+              AppPicker.showVideoPicker(context);
+            });
+          }),
+
         ],
       ),
+    );
+  }
+
+  Widget commonIconButton(IconData iconData, Function onPressed) {
+    return IconButton(
+      onPressed: () => onPressed.call(),
+      icon: Icon(iconData),
     );
   }
 }
