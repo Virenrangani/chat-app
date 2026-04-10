@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
-
-import '../../../data/model/message_model.dart';
+import '../../../domain/entities/message.dart';
 import '../chat_message.dart';
 
 class MediaFile extends StatelessWidget{
-  final MessageModel msg;
+  final Message msg;
 
   const MediaFile({super.key, required this.msg});
 
