@@ -2,23 +2,25 @@ import 'dart:io';
 
 import 'package:chat_demo/core/util/date/app_date.dart';
 import 'package:chat_demo/feature/data/model/message_model.dart';
+import 'package:chat_demo/feature/domain/use_case/chat_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../data/data_source/chat_storage.dart';
+import '../../domain/entities/message.dart';
 import 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  final ChatLocalDataSource localDataSource;
+  final ChatUseCase chatUseCase;
   File? selectedImage;
   File? selectedAudio;
   File? selectedVideo;
 
-  ChatCubit(this.localDataSource) : super(ChatInitial());
+  ChatCubit({required this.chatUseCase}) : super(ChatInitial());
 
   Future<void> loadMessages() async {
     try {
       emit(ChatLoading());
 
-      final messages = await localDataSource.getMessages();
+      final messages = await chatUseCase.callGetMessage();
       emit(ChatLoaded(messages));
     } catch (e) {
       print("message is not fetch");
@@ -31,7 +33,7 @@ class ChatCubit extends Cubit<ChatState> {
       final currentState = state;
 
       if (currentState is ChatLoaded) {
-        final message = MessageModel(
+        final message = Message(
           message: text,
           timestamp: DateFormatter.hourMinuteFormat(DateTime.now()),
           senderId:senderId,
@@ -42,9 +44,9 @@ class ChatCubit extends Cubit<ChatState> {
               : null,
         );
 
-        await localDataSource.saveMessage(message);
+        await chatUseCase.callSave(message);
 
-        final updatedMessages = List<MessageModel>.from(
+        final updatedMessages = List<Message>.from(
           currentState.messages,
         )..add(message);
 
