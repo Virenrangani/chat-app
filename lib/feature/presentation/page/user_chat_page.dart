@@ -7,6 +7,7 @@ import 'package:chat_demo/feature/presentation/widget/select_media_file.dart';
 import 'package:chat_demo/feature/presentation/widget/user_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import '../cubit/chat_cubit.dart';
 import '../cubit/chat_state.dart';
 
@@ -19,7 +20,7 @@ class UserChatPage extends StatefulWidget {
 }
 
 class _UserChatPageState extends State<UserChatPage> {
-  ChatCubit chatCubit = ChatCubit(ChatLocalDataSource());
+  ChatCubit chatCubit = GetIt.I<ChatCubit>();
   TextEditingController messageController = TextEditingController();
   late User currentUser;
 
