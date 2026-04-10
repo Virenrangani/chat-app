@@ -1,9 +1,9 @@
-import 'package:chat_demo/feature/data/model/message_model.dart';
 import 'package:chat_demo/feature/presentation/widget/chat_message.dart';
 import 'package:flutter/material.dart';
+import '../../domain/entities/message.dart';
 
 class UserChat extends StatelessWidget {
-  final List<MessageModel> messages;
+  final List<Message> messages;
   final String currentUserId;
 
   const UserChat({super.key, required this.messages, required this.currentUserId});
