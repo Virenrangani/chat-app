@@ -1,7 +1,6 @@
 import 'package:chat_demo/core/constant/padding/app_padding.dart';
-import 'package:chat_demo/feature/data/model/message_model.dart';
 import 'package:flutter/material.dart';
-
+import '../../domain/entities/message.dart';
 import 'chat_message/media_file.dart';
 import 'chat_message/message_text.dart';
 import 'chat_message/time_stamp.dart';
@@ -27,7 +26,7 @@ enum MediaType {
 }
 
 class ChatMessage extends StatelessWidget {
-  final MessageModel msg;
+  final Message msg;
 
   const ChatMessage({super.key, required this.msg});
 
