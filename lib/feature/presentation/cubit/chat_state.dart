@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:chat_demo/feature/data/model/message_model.dart';
+import '../../domain/entities/message.dart';
 
 abstract class ChatState {}
 
@@ -9,7 +8,7 @@ class ChatInitial extends ChatState {}
 class ChatLoading extends ChatState {}
 
 class ChatLoaded extends ChatState {
-  final List<MessageModel> messages;
+  final List<Message> messages;
   final File? selectedImage;
   final File? selectedAudio;
   final File? selectedVideo;
