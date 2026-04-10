@@ -1,7 +1,9 @@
+import 'package:chat_demo/di/injection.dart';
 import 'package:chat_demo/feature/presentation/page/chat_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  Injection().configDependencies();
   runApp(const MyApp());
 }
 
