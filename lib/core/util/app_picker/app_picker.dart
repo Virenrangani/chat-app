@@ -7,7 +7,7 @@ class AppPicker {
   static void showImagePicker(BuildContext context, {required Function(File) onPicked}) async {
     try {
       final result = await FilePicker.pickFiles(
-        type: FileType.image,
+        type: FileType.media,
         allowMultiple: false,
         withData: false,
         withReadStream: false,
@@ -39,7 +39,7 @@ class AppPicker {
   }
 
   static void showVideoPicker(BuildContext context, {required Function(File) onPicked}) async {
-    try {
+
       final result = await FilePicker.pickFiles(
         type: FileType.video,
         allowMultiple: false,
@@ -48,10 +48,10 @@ class AppPicker {
       );
       if (result != null && result.files.isNotEmpty) {
         final path = result.files.first.path;
+        print("video path $path");
+
         if (path != null) onPicked(File(path));
       }
-    } catch (e) {
-      debugPrint('Video picker error: $e');
-    }
+
   }
 }
