@@ -3,7 +3,7 @@ import 'package:chat_demo/core/constant/colour/app_color.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constant/border_radius/app_border_radius.dart';
 import '../../../core/constant/padding/app_padding.dart';
-import '../../../core/util/app_picker/app_audio_picker.dart';
+import '../../../core/util/app_picker/app_picker.dart';
 
 class ChatOption extends StatelessWidget {
   final Function(File) onImagePicked;
