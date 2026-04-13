@@ -40,6 +40,8 @@ dependencies:
   get_it: ^9.2.1
   image_picker: ^1.2.1
   file_picker: ^11.0.2
+  audioplayers: ^5.2.1
+  video_player: ^2.11.1
 
 
 dev_dependencies:
