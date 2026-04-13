@@ -2,6 +2,7 @@ import 'package:chat_demo/core/constant/padding/app_padding.dart';
 import 'package:chat_demo/core/widget/text_field/app_text_field.dart';
 import 'package:chat_demo/feature/data/data_source/chat_storage.dart';
 import 'package:chat_demo/feature/domain/entities/user.dart';
+import 'package:chat_demo/feature/presentation/widget/chat_message.dart';
 import 'package:chat_demo/feature/presentation/widget/chat_option.dart';
 import 'package:chat_demo/feature/presentation/widget/select_media_file.dart';
 import 'package:chat_demo/feature/presentation/widget/user_chat.dart';
@@ -20,23 +21,23 @@ class UserChatPage extends StatefulWidget {
 }
 
 class _UserChatPageState extends State<UserChatPage> {
-  ChatCubit chatCubit = GetIt.I<ChatCubit>();
   TextEditingController messageController = TextEditingController();
   late User currentUser;
 
   @override
   void initState() {
-    chatCubit.loadMessages();
     currentUser = widget.user;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+  create: (context) => GetIt.I<ChatCubit>(),
+  child: Scaffold(
       appBar: AppBar(title: Text(currentUser.name)),
       body: BlocBuilder<ChatCubit, ChatState>(
-        bloc: chatCubit,
+
         builder: (context, state) {
           if (state is ChatLoaded) {
             return Column(
@@ -49,22 +50,24 @@ class _UserChatPageState extends State<UserChatPage> {
                   ),
                 ),
 
-                SelectMediaFile(state: state, chatCubit: chatCubit),
+                SelectMediaFile(),
 
                 Padding(
                   padding: AppPadding.edgeAll20,
                   child: AppFormField(
                     controller: messageController,
                     prefixIcon: IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) => ChatOption(
-                            onImagePicked: (file) => chatCubit.selectImage(file),
-                            onAudioPicked: (file) => chatCubit.selectAudio(file),
-                            onVideoPicked: (file) => chatCubit.selectVideo(file),
-                          ),
-                        );
+                      onPressed: () async {
+                        final ChatCubit chatCubit=context.read<ChatCubit>();
+                        await showModalBottomSheet(
+                             context: context,
+                             builder: (context) =>
+                                 ChatOption(
+                                       onImagePicked: (file) => chatCubit.selectDocument(file, MediaType.image),
+                                       onAudioPicked: (file) => chatCubit.selectDocument(file, MediaType.audio),
+                                       onVideoPicked: (file) => chatCubit.selectDocument(file, MediaType.video)
+                                     ),
+                           );
                       },
                       icon: const Icon(Icons.attach_file),
                     ),
@@ -72,12 +75,10 @@ class _UserChatPageState extends State<UserChatPage> {
                       onPressed: () {
                         final text = messageController.text.trim();
 
-                        final hasFile = state.selectedImage != null ||
-                            state.selectedAudio != null ||
-                            state.selectedVideo != null;
+                        final hasFile = state.file!=null;
 
                         if (text.isNotEmpty || hasFile) {
-                          chatCubit.sendMessage(text, currentUser.id);
+                          context.read<ChatCubit>().sendMessage(text, currentUser.id);
                           messageController.clear();
                         }
                       },
@@ -92,6 +93,7 @@ class _UserChatPageState extends State<UserChatPage> {
           return const SizedBox();
         },
       ),
+    ),
     );
   }
 }
