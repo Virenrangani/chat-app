@@ -1,20 +1,81 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_demo/core/util/date/app_date.dart';
 import 'package:chat_demo/feature/data/model/message_model.dart';
 import 'package:chat_demo/feature/domain/use_case/chat_use_case.dart';
+import 'package:chat_demo/feature/presentation/widget/chat_message.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_player/video_player.dart';
 import '../../data/data_source/chat_storage.dart';
 import '../../domain/entities/message.dart';
 import 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   final ChatUseCase chatUseCase;
-  File? selectedImage;
-  File? selectedAudio;
-  File? selectedVideo;
+  File? file;
+  MediaType? mediaType;
 
-  ChatCubit({required this.chatUseCase}) : super(ChatInitial());
+  ChatCubit({required this.chatUseCase}) : super(ChatInitial()){
+    loadMessages();
+  }
+
+  bool isPlaying=false;
+  bool isVideoPlaying = false;
+
+  final AudioPlayer player = AudioPlayer();
+  VideoPlayerController? videoController;
+
+
+  Future<void> initVideo(File file) async {
+    videoController = VideoPlayerController.file(file);
+
+    await videoController!.initialize();
+
+    videoController!.addListener(() {
+      isVideoPlaying = videoController!.value.isPlaying;
+      emitCurrentLoaded();
+    });
+
+    emitCurrentLoaded();
+  }
+
+  void toggleVideo() {
+    if (videoController == null) return;
+
+    if (videoController!.value.isPlaying) {
+      videoController!.pause();
+    } else {
+      videoController!.play();
+    }
+    emitCurrentLoaded();
+  }
+
+  void disposeVideo() {
+    videoController?.dispose();
+    videoController = null;
+    isVideoPlaying = false;
+  }
+
+  Future<void> toggleAudio() async {
+    if (file == null) return;
+    print("PATH: ${file!.path}");
+    print("EXISTS: ${File(file!.path).existsSync()}");
+    print("SIZE: ${File(file!.path).lengthSync()}");
+    if (isPlaying) {
+      await player.pause();
+    } else {
+      await player.setVolume(1.0);
+
+      await player.play(DeviceFileSource(file!.path));
+    }
+    isPlaying = !isPlaying;
+    emitCurrentLoaded();
+  }
+  void disposeAudio(){
+    player.dispose();
+    isPlaying=false;
+  }
 
   Future<void> loadMessages() async {
     try {
@@ -37,11 +98,8 @@ class ChatCubit extends Cubit<ChatState> {
           message: text,
           timestamp: DateFormatter.hourMinuteFormat(DateTime.now()),
           senderId:senderId,
-          mediaPath: selectedImage?.path ?? selectedAudio?.path ?? selectedVideo?.path,
-          mediaType: selectedImage != null ? "image"
-              : selectedAudio != null ? "audio"
-              : selectedVideo != null ? "video"
-              : null,
+          mediaPath: file?.path,
+          mediaType: mediaType.toString()
         );
 
         await chatUseCase.callSave(message);
@@ -50,9 +108,8 @@ class ChatCubit extends Cubit<ChatState> {
           currentState.messages,
         )..add(message);
 
-        selectedImage = null;
-        selectedAudio = null;
-        selectedVideo = null;
+        file=null;
+        mediaType=null;
 
         emit(ChatLoaded(updatedMessages));
       }
@@ -64,40 +121,21 @@ class ChatCubit extends Cubit<ChatState> {
     if (state is ChatLoaded) {
       emit(ChatLoaded(
         (state as ChatLoaded).messages,
-        selectedImage: selectedImage,
-        selectedAudio: selectedAudio,
-        selectedVideo: selectedVideo,
+        file: file,
+        mediaType: mediaType,
       ));
     }
   }
 
-  void selectImage(File file) {
-    selectedImage = file;
+  void selectDocument(File selectedFile,MediaType type) {
+    file = selectedFile;
+    mediaType=type;
     emitCurrentLoaded();
   }
 
-  void selectAudio(File file) {
-    selectedAudio = file;
-    emitCurrentLoaded();
-  }
-
-  void selectVideo(File file) {
-    selectedVideo = file;
-    emitCurrentLoaded();
-  }
-
-  void clearImage() {
-    selectedImage = null;
-    emitCurrentLoaded();
-  }
-
-  void clearAudio() {
-    selectedAudio = null;
-    emitCurrentLoaded();
-  }
-
-  void clearVideo() {
-    selectedVideo = null;
+  void clearDocument() {
+    file = null;
+    mediaType=null;
     emitCurrentLoaded();
   }
 
