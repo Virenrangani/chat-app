@@ -6,14 +6,15 @@ import 'chat_message/message_text.dart';
 import 'chat_message/time_stamp.dart';
 
 enum MediaType {
-  image(icon: Icons.image, color: Colors.green),
-  audio(icon: Icons.audio_file, color: Colors.blue),
-  video(icon: Icons.videocam, color: Colors.red);
+  image(icon: Icons.image, color: Colors.green,name:"image"),
+  audio(icon: Icons.audio_file, color: Colors.blue,name: "audio"),
+  video(icon: Icons.videocam, color: Colors.red,name: "video");
 
   final IconData icon;
   final Color color;
+  final String name;
 
-  const MediaType({required this.icon, required this.color});
+  const MediaType({required this.icon, required this.color, required this.name});
 
   static MediaType? fromString(String? value) {
     switch (value) {
@@ -22,6 +23,10 @@ enum MediaType {
       case "video": return MediaType.video;
       default:      return null;
     }
+  }
+   @override
+  toString(){
+    return name;
   }
 }
 
