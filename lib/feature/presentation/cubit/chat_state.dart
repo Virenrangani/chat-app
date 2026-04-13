@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:chat_demo/feature/presentation/widget/chat_message.dart';
+
 import '../../domain/entities/message.dart';
 
 abstract class ChatState {}
@@ -9,11 +11,10 @@ class ChatLoading extends ChatState {}
 
 class ChatLoaded extends ChatState {
   final List<Message> messages;
-  final File? selectedImage;
-  final File? selectedAudio;
-  final File? selectedVideo;
+  final File? file;
+  final MediaType? mediaType;
 
-  ChatLoaded(this.messages,{this.selectedImage,this.selectedAudio,this.selectedVideo});
+  ChatLoaded(this.messages, {this.file, this.mediaType,});
 }
 
 class ChatError extends ChatState {
