@@ -65,7 +65,8 @@ class _UserChatPageState extends State<UserChatPage> {
                                  ChatOption(
                                        onImagePicked: (file) => chatCubit.selectDocument(file, MediaType.image),
                                        onAudioPicked: (file) => chatCubit.selectDocument(file, MediaType.audio),
-                                       onVideoPicked: (file) => chatCubit.selectDocument(file, MediaType.video)
+                                       onVideoPicked: (file) => chatCubit.selectDocument(file, MediaType.video),
+                                       onDocumentPicked: (file)=>chatCubit.selectDocument(file, MediaType.document),
                                      ),
                            );
                       },
