@@ -9,12 +9,14 @@ class ChatOption extends StatelessWidget {
   final Function(File) onImagePicked;
   final Function(File) onAudioPicked;
   final Function(File) onVideoPicked;
+  final Function(File) onDocumentPicked;
 
   const ChatOption({
     super.key,
     required this.onImagePicked,
     required this.onAudioPicked,
     required this.onVideoPicked,
+    required this.onDocumentPicked,
   });
 
 
@@ -51,6 +53,12 @@ class ChatOption extends StatelessWidget {
             });
           }),
 
+          commonIconButton(Icons.insert_drive_file_outlined, () {
+            Navigator.pop(context);
+            Future.delayed(const Duration(milliseconds: 200), () {
+              AppPicker.showDocumentPicker(context, onPicked: onDocumentPicked);
+            });
+          }),
         ],
       ),
     );
