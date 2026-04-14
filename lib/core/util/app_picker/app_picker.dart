@@ -54,4 +54,21 @@ class AppPicker {
       }
 
   }
+
+  static void showDocumentPicker(BuildContext context, {required Function(File) onPicked}) async {
+    try {
+      final result = await FilePicker.pickFiles(
+        type: FileType.any,
+        allowMultiple: false,
+        withData: false,
+        withReadStream: false,
+      );
+      if (result != null && result.files.isNotEmpty) {
+        final path = result.files.first.path;
+        if (path != null) onPicked(File(path));
+      }
+    } catch (e) {
+      debugPrint('Document picker error: $e');
+    }
+  }
 }
