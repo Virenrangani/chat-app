@@ -5,6 +5,7 @@ import 'package:chat_demo/feature/presentation/widget/media_file/video_media_fil
 import 'package:flutter/cupertino.dart';
 import '../../../domain/entities/message.dart';
 import '../chat_message.dart';
+import '../media_file/document_media_file.dart';
 
 class MediaFile extends StatelessWidget{
   final Message msg;
@@ -19,6 +20,8 @@ class MediaFile extends StatelessWidget{
         return AudioImageFile(file: File(msg.mediaPath?? ""),);
       case MediaType.video:
         return VideoMediaFile(file: File(msg.mediaPath?? ""),);
+      case MediaType.document:
+        return DocumentMediaFile(file: File(msg.mediaPath??""),);
       case null:
         return const SizedBox.shrink();
     }
