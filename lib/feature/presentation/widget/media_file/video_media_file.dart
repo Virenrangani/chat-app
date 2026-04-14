@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoMediaFile extends StatefulWidget {
@@ -40,14 +39,12 @@ class _VideoMediaFileState extends State<VideoMediaFile> {
 
     return Column(
       children: [
-        controller != null && controller!.value.isInitialized
-            ? AspectRatio(
-          aspectRatio: controller!.value.aspectRatio,
-          child: VideoPlayer(controller!),
-        )
-            : const SizedBox(
-          height: 150,
-          child: Center(child: CircularProgressIndicator()),
+        SizedBox(
+          width: double.infinity,
+          height: 200,
+          child: controller != null && controller!.value.isInitialized
+              ? VideoPlayer(controller!)
+              :  Center(child: CircularProgressIndicator()),
         ),
         Row(
           children: [
