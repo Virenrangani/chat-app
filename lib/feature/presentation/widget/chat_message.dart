@@ -8,7 +8,8 @@ import 'chat_message/time_stamp.dart';
 enum MediaType {
   image(icon: Icons.image, color: Colors.green,name:"image"),
   audio(icon: Icons.audio_file, color: Colors.blue,name: "audio"),
-  video(icon: Icons.videocam, color: Colors.red,name: "video");
+  video(icon: Icons.videocam, color: Colors.red,name: "video"),
+  document(icon :Icons.picture_as_pdf_outlined,color: Colors.yellow,name: "document");
 
   final IconData icon;
   final Color color;
@@ -21,6 +22,7 @@ enum MediaType {
       case "image": return MediaType.image;
       case "audio": return MediaType.audio;
       case "video": return MediaType.video;
+      case "document": return MediaType.document;
       default:      return null;
     }
   }
