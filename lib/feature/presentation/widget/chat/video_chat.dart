@@ -33,14 +33,12 @@ class _VideoChatState extends State<VideoChat> {
       children: [
         Column(
           children: [
-            controller != null && controller.value.isInitialized
-                ? AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: VideoPlayer(controller),
-            )
-                : const SizedBox(
-              height: 150,
-              child: Center(child: CircularProgressIndicator()),
+            SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: controller != null && controller.value.isInitialized
+                  ? VideoPlayer(controller)
+                  :  Center(child: CircularProgressIndicator()),
             ),
             Row(
               children: [
@@ -49,7 +47,7 @@ class _VideoChatState extends State<VideoChat> {
                     context.read<ChatCubit>().toggleVideo();
                     },
                   icon: Icon(
-                    context.read<ChatCubit>().isPlaying
+                    context.watch<ChatCubit>().isVideoPlaying
                         ? Icons.pause
                         : Icons.play_arrow,
                   ),
