@@ -60,7 +60,7 @@ class AppTextStyles {
     color: color,
   );
 
-  static TextStyle bodyMedium({Color color = AppColor.textSecondary}) => TextStyle(
+  static TextStyle bodyMedium({Color color = AppColor.textWhite}) => TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: color,
@@ -92,7 +92,7 @@ class AppTextStyles {
     color: color,
   );
 
-  static TextStyle captionMedium({Color color = AppColor.textSecondary}) => TextStyle(
+  static TextStyle captionMedium({Color color = AppColor.backgroundPrimary}) => TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: color,
