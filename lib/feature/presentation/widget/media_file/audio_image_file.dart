@@ -1,20 +1,37 @@
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:chat_demo/core/constant/colour/app_color.dart';
 import 'package:flutter/material.dart';
 
-class AudioImageFile extends StatefulWidget {
+import '../../../../core/widget/audio_duration/audio_duration.dart';
+
+class AudioMediaFile extends StatefulWidget {
   final File file;
 
-  const AudioImageFile({super.key, required this.file});
+  const AudioMediaFile({super.key, required this.file});
 
   @override
-  State<AudioImageFile> createState() => _AudioImageFileState();
+  State<AudioMediaFile> createState() => _AudioMediaFileState();
 }
 
-class _AudioImageFileState extends State<AudioImageFile> {
+class _AudioMediaFileState extends State<AudioMediaFile> {
   final AudioPlayer player = AudioPlayer();
   bool isPlaying = false;
+  Duration? duration;
 
+  @override
+  void initState() {
+    super.initState();
+
+    player.onDurationChanged.listen((d) {
+      setState(() {
+        duration = d;
+      });
+    });
+
+    player.setSource(DeviceFileSource(widget.file.path));
+  }
+  
   Future<void> toggleAudio() async {
     if (isPlaying) {
       await player.pause();
@@ -37,17 +54,15 @@ class _AudioImageFileState extends State<AudioImageFile> {
       width:240,
       child: ListTile(
         minVerticalPadding:0,
-        leading: const Icon(Icons.audio_file, color: Colors.blue),
-
-        title: Text(
-          widget.file.path.split('/').last,
-          overflow: TextOverflow.ellipsis,
+        leading: CircleAvatar(
+          backgroundColor:AppColor.warning,
+          child: Icon(Icons.headphones,color:AppColor.background,size:20,),
         ),
-
-        subtitle: IconButton(
-          onPressed: toggleAudio,
-          icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+        title:IconButton(
+            onPressed: toggleAudio,
+            icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
         ),
+        subtitle:Text(formatDuration(duration)),
       ),
     );
   }
