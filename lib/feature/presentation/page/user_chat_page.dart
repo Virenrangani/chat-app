@@ -1,3 +1,4 @@
+import 'package:chat_demo/core/constant/colour/app_color.dart';
 import 'package:chat_demo/core/constant/padding/app_padding.dart';
 import 'package:chat_demo/core/widget/text_field/app_text_field.dart';
 import 'package:chat_demo/feature/data/data_source/chat_storage.dart';
@@ -6,6 +7,7 @@ import 'package:chat_demo/feature/presentation/widget/chat_message.dart';
 import 'package:chat_demo/feature/presentation/widget/chat_option.dart';
 import 'package:chat_demo/feature/presentation/widget/select_media_file.dart';
 import 'package:chat_demo/feature/presentation/widget/user_chat.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -35,10 +37,12 @@ class _UserChatPageState extends State<UserChatPage> {
     return BlocProvider(
   create: (context) => GetIt.I<ChatCubit>(),
   child: Scaffold(
+    backgroundColor: Colors.black,
       appBar: AppBar(title: Text(currentUser.name)),
       body: BlocBuilder<ChatCubit, ChatState>(
 
         builder: (context, state) {
+          final cubit=context.read<ChatCubit>();
           if (state is ChatLoaded) {
             return Column(
               children: [
@@ -56,21 +60,29 @@ class _UserChatPageState extends State<UserChatPage> {
                   padding: AppPadding.edgeAll20,
                   child: AppFormField(
                     controller: messageController,
-                    prefixIcon: IconButton(
-                      onPressed: () async {
-                        final ChatCubit chatCubit=context.read<ChatCubit>();
-                        await showModalBottomSheet(
-                             context: context,
-                             builder: (context) =>
-                                 ChatOption(
-                                       onImagePicked: (file) => chatCubit.selectDocument(file, MediaType.image),
-                                       onAudioPicked: (file) => chatCubit.selectDocument(file, MediaType.audio),
-                                       onVideoPicked: (file) => chatCubit.selectDocument(file, MediaType.video),
-                                       onDocumentPicked: (file)=>chatCubit.selectDocument(file, MediaType.document),
-                                     ),
-                           );
-                      },
-                      icon: const Icon(Icons.attach_file),
+                    prefixIcon: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () async {
+                            final ChatCubit chatCubit=context.read<ChatCubit>();
+                            await showModalBottomSheet(
+                                 context: context,
+                                 builder: (context) =>
+                                     ChatOption(
+                                           onImagePicked: (file) => chatCubit.selectDocument(file, MediaType.image),
+                                           onAudioPicked: (file) => chatCubit.selectDocument(file, MediaType.audio),
+                                           onVideoPicked: (file) => chatCubit.selectDocument(file, MediaType.video),
+                                           onDocumentPicked: (file)=>chatCubit.selectDocument(file, MediaType.document),
+                                         ),
+                               );
+                          },
+                          icon: const Icon(Icons.attach_file),
+                        ),
+                        IconButton(onPressed: (){
+                          cubit.toggleEmoji();
+                        }, icon: cubit.showEmoji ?Icon(Icons.keyboard):Icon(Icons.emoji_emotions_outlined)
+                        ),
+                      ],
                     ),
                     suffix: IconButton(
                       onPressed: () {
@@ -87,7 +99,19 @@ class _UserChatPageState extends State<UserChatPage> {
                     ),
                   ),
                 ),
-
+                AnimatedContainer(
+                  duration:  Duration(milliseconds: 200),
+                  height: cubit.showEmoji ? 250 : 0,
+                  child: EmojiPicker(
+                    config:  Config(
+                      height: 250,
+                      emojiViewConfig: EmojiViewConfig(
+                        emojiSizeMax: 24,
+                        columns: 8,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             );
           }
