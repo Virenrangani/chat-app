@@ -44,10 +44,10 @@ class AppFormField extends StatelessWidget {
       obscuringCharacter: "*",
       maxLines: obscureText ? 1 : maxLines,
       onChanged: onChanged,
-      style: const TextStyle(fontSize: 16),
+      style: AppTextStyles.bodyMedium(color:Colors.white),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: AppTextStyles.h2(),
+        hintStyle: AppTextStyles.h4(),
         prefixIcon: prefixIcon != null
             ? Padding(
           padding: AppPadding.edgeAll4,
@@ -62,13 +62,12 @@ class AppFormField extends StatelessWidget {
             : null,
         enabledBorder: OutlineInputBorder(
           borderRadius: AppBorderRadius.cir16,
-          borderSide: BorderSide(color: AppColor.primary, width: 1.5),
+          borderSide: BorderSide(color: AppColor.textSecondary, width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: AppBorderRadius.cir16,
           borderSide: BorderSide(color: AppColor.textSecondary, width: 1.5),
         ),
-        border: OutlineInputBorder(borderRadius: AppBorderRadius.cir16),
       ),
     );
   }
