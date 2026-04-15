@@ -35,7 +35,7 @@ class _UserChatPageState extends State<UserChatPage> {
     return BlocProvider(
   create: (context) => GetIt.I<ChatCubit>(),
   child: Scaffold(
-    // backgroundColor: Colors.black,
+    backgroundColor: Colors.black,
       appBar: AppBar(title: Text(currentUser.name)),
       body: BlocBuilder<ChatCubit, ChatState>(
 
@@ -59,6 +59,7 @@ class _UserChatPageState extends State<UserChatPage> {
                   child: AppFormField(
                     controller: messageController,
                     prefixIcon: IconButton(onPressed: (){
+                      FocusScope.of(context).unfocus();
                       cubit.toggleEmoji();
                     }, icon: cubit.showEmoji ?Icon(Icons.keyboard):Icon(Icons.emoji_emotions_outlined)
                     ),
@@ -101,7 +102,9 @@ class _UserChatPageState extends State<UserChatPage> {
                 AnimatedContainer(
                   duration:  Duration(milliseconds: 200),
                   height: cubit.showEmoji ? 250 : 0,
-                  child: EmojiPicker(
+                  child: cubit.showEmoji ?
+                  EmojiPicker(
+                    textEditingController: messageController,
                     config:  Config(
                       height: 250,
                       emojiViewConfig: EmojiViewConfig(
@@ -109,7 +112,8 @@ class _UserChatPageState extends State<UserChatPage> {
                         columns: 8,
                       ),
                     ),
-                  ),
+                  )
+                      : const SizedBox(),
                 ),
               ],
             );
