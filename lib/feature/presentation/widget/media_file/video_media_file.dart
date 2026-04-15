@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import '../../../../core/constant/text_style/app_text_style.dart';
-import '../../../../core/widget/audio_duration/audio_duration.dart';
+import '../../../../core/widget/file_duration/file_duration.dart';
 import '../../cubit/chat_cubit.dart';
 
 class VideoMediaFile extends StatefulWidget {
