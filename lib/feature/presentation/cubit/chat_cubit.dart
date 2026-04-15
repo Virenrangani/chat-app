@@ -29,6 +29,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   void toggleEmoji(){
     showEmoji =! showEmoji;
+    emitCurrentLoaded();
   }
 
   Future<void> initVideo(File file) async {
