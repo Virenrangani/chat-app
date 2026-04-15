@@ -17,7 +17,7 @@ class MediaFile extends StatelessWidget{
       case MediaType.image:
         return ImageMediaFile(file: File(msg.mediaPath?? ""));
       case MediaType.audio:
-        return AudioImageFile(file: File(msg.mediaPath?? ""),);
+        return AudioMediaFile(file: File(msg.mediaPath?? ""),);
       case MediaType.video:
         return VideoMediaFile(file: File(msg.mediaPath?? ""),);
       case MediaType.document:
