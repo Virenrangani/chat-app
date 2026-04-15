@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:chat_demo/feature/presentation/widget/media_file/audio_image_file.dart';
+import 'package:chat_demo/feature/presentation/widget/media_file/audio_media_file.dart';
 import 'package:chat_demo/feature/presentation/widget/media_file/image_media_file.dart';
 import 'package:chat_demo/feature/presentation/widget/media_file/video_media_file.dart';
 import 'package:flutter/cupertino.dart';
