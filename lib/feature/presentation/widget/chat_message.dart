@@ -1,3 +1,4 @@
+import 'package:chat_demo/core/constant/colour/app_color.dart';
 import 'package:chat_demo/core/constant/padding/app_padding.dart';
 import 'package:flutter/material.dart';
 import '../../domain/entities/message.dart';
@@ -40,10 +41,10 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(6),
+      margin: EdgeInsets.all(6),
       padding: AppPadding.edgeAll8,
       decoration: BoxDecoration(
-        color: Colors.blue.shade100,
+        color: AppColor.primary,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
