@@ -21,10 +21,15 @@ class ChatCubit extends Cubit<ChatState> {
 
   bool isPlaying=false;
   bool isVideoPlaying = false;
+  bool showEmoji=false;
 
   final AudioPlayer player = AudioPlayer();
   VideoPlayerController? videoController;
 
+
+  void toggleEmoji(){
+    showEmoji =! showEmoji;
+  }
 
   Future<void> initVideo(File file) async {
     videoController = VideoPlayerController.file(file);
