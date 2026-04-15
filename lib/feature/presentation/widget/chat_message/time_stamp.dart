@@ -1,3 +1,4 @@
+import 'package:chat_demo/core/constant/text_style/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class Timestamp extends StatelessWidget {
@@ -9,7 +10,7 @@ class Timestamp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       timestamp,
-      style: const TextStyle(fontSize: 10, color: Colors.grey),
+      style: AppTextStyles.captionMedium(),
     );
   }
 }
