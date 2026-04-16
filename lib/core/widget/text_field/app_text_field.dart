@@ -45,12 +45,15 @@ class AppFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       obscuringCharacter: "*",
+      cursorColor: Colors.white,
       maxLines: obscureText ? 1 : maxLines,
       onChanged: onChanged,
       style: AppTextStyles.bodyMedium(color:Colors.white),
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.grey.shade900,
         hintText: hintText,
-        hintStyle: AppTextStyles.h4(),
+        hintStyle: AppTextStyles.h4(color: Colors.white70),
         prefixIcon: prefixIcon != null
             ? Padding(
           padding: AppPadding.edgeAll4,
@@ -64,12 +67,10 @@ class AppFormField extends StatelessWidget {
         )
             : null,
         enabledBorder: OutlineInputBorder(
-          borderRadius: AppBorderRadius.cir16,
-          borderSide: BorderSide(color: AppColor.textSecondary, width: 1.5),
+          borderRadius: AppBorderRadius.cir28,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: AppBorderRadius.cir16,
-          borderSide: BorderSide(color: AppColor.textSecondary, width: 1.5),
+          borderRadius: AppBorderRadius.cir28,
         ),
       ),
     );
