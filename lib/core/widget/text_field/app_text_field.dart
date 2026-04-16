@@ -9,6 +9,7 @@ class AppFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffix;
   final Widget? prefix;
+  final FocusNode? focusNode;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
@@ -32,6 +33,7 @@ class AppFormField extends StatelessWidget {
     this.onChanged,
     this.borderColor,
     this.prefix,
+    this.focusNode,
   });
 
   @override
@@ -39,6 +41,7 @@ class AppFormField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       validator: validator,
+      focusNode: focusNode,
       keyboardType: keyboardType,
       obscureText: obscureText,
       obscuringCharacter: "*",
