@@ -92,7 +92,7 @@ class AppTextStyles {
     color: color,
   );
 
-  static TextStyle captionMedium({Color color = AppColor.backgroundPrimary}) => TextStyle(
+  static TextStyle captionMedium({Color color = AppColor.primarySurface}) => TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: color,
