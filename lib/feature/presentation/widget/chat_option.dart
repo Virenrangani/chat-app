@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:chat_demo/core/constant/colour/app_color.dart';
+import 'package:chat_demo/feature/presentation/widget/chat_icon_button.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constant/border_radius/app_border_radius.dart';
 import '../../../core/constant/padding/app_padding.dart';
@@ -21,53 +22,93 @@ class ChatOption extends StatelessWidget {
 
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: AppPadding.edgeAll16,
       decoration: BoxDecoration(
-        borderRadius: AppBorderRadius.verTop12,
-        color: AppColor.textWhite,
+        borderRadius: AppBorderRadius.verTop24,
+        color: AppColor.primaryLight,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ChatIconButton(
+                icon: Icons.insert_drive_file,
+                label: "Document",
+                color: Colors.indigo,
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    AppPicker.showDocumentPicker(context, onPicked: onDocumentPicked);
+                  });
+                },
+              ),
+              ChatIconButton(
+                icon: Icons.camera_alt,
+                label: "Camera",
+                color: Colors.pink,
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    AppPicker.showImagePicker(context, onPicked: onImagePicked);
+                  });
+                },
+              ),
+              ChatIconButton(
+                icon: Icons.image,
+                label: "Gallery",
+                color: Colors.purple,
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    AppPicker.showImagePicker(context, onPicked: onImagePicked);
+                  });
+                },
+              ),
+            ],
+          ),
 
-          commonIconButton(Icons.image, () {
-            Navigator.pop(context);
-            Future.delayed(const Duration(milliseconds: 200), () {
-              AppPicker.showImagePicker(context, onPicked: onImagePicked);
-            });
-          }),
+          const SizedBox(height: 20),
 
-          commonIconButton(Icons.audio_file, () {
-            Navigator.pop(context);
-            Future.delayed(const Duration(milliseconds: 200), () {
-              AppPicker.showAudioPicker(context, onPicked: onAudioPicked);
-            });
-          }),
-
-          commonIconButton(Icons.videocam_outlined, () {
-            Navigator.pop(context);
-            Future.delayed(const Duration(milliseconds: 200), () {
-              AppPicker.showVideoPicker(context, onPicked: onVideoPicked);
-            });
-          }),
-
-          commonIconButton(Icons.insert_drive_file_outlined, () {
-            Navigator.pop(context);
-            Future.delayed(const Duration(milliseconds: 200), () {
-              AppPicker.showDocumentPicker(context, onPicked: onDocumentPicked);
-            });
-          }),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ChatIconButton(
+                icon: Icons.headphones,
+                label: "Audio",
+                color: Colors.orange,
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    AppPicker.showAudioPicker(context, onPicked: onAudioPicked);
+                  });
+                },
+              ),
+              ChatIconButton(
+                icon: Icons.videocam,
+                label: "Video",
+                color: Colors.teal,
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    AppPicker.showVideoPicker(context, onPicked: onVideoPicked);
+                  });
+                },
+              ),
+              ChatIconButton(
+                icon: Icons.person,
+                label: "Contact",
+                color: Colors.blue,
+                onTap: () {},
+              ),
+            ],
+          ),
         ],
       ),
-    );
-  }
-
-  Widget commonIconButton(IconData iconData, Function onPressed) {
-    return IconButton(
-      onPressed: () => onPressed.call(),
-      icon: Icon(iconData),
     );
   }
 }
