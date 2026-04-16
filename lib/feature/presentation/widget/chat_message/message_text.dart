@@ -1,3 +1,4 @@
+import 'package:chat_demo/core/constant/text_style/app_text_style.dart';
 import 'package:flutter/cupertino.dart';
 
 class MessageText extends StatelessWidget {
@@ -11,7 +12,7 @@ class MessageText extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Text(message),
+      child: Text(message,style: AppTextStyles.titleMedium(),),
     );
   }
 }
