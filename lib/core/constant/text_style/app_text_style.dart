@@ -41,9 +41,9 @@ class AppTextStyles {
     color: color,
   );
 
-  static TextStyle titleMedium({Color color = AppColor.primary}) => TextStyle(
+  static TextStyle titleMedium({Color color = AppColor.scaffoldBackground}) => TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     color: color,
   );
 
