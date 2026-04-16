@@ -17,6 +17,7 @@ class _AudioMediaFileState extends State<AudioMediaFile> {
   final AudioPlayer player = AudioPlayer();
   bool isPlaying = false;
   Duration? duration;
+  Duration position = Duration.zero;
 
   @override
   void initState() {
@@ -25,6 +26,19 @@ class _AudioMediaFileState extends State<AudioMediaFile> {
     player.onDurationChanged.listen((d) {
       setState(() {
         duration = d;
+      });
+
+      player.onPositionChanged.listen((p) {
+        setState(() {
+          position = p;
+        });
+      });
+    });
+
+    player.onPlayerComplete.listen((event) {
+      setState(() {
+        isPlaying = false;
+        position = Duration.zero;
       });
     });
 
@@ -49,6 +63,7 @@ class _AudioMediaFileState extends State<AudioMediaFile> {
 
   @override
   Widget build(BuildContext context) {
+    final extension= widget.file.path.split(".").last;
     return SizedBox(
       width:240,
       child: ListTile(
@@ -57,11 +72,40 @@ class _AudioMediaFileState extends State<AudioMediaFile> {
           backgroundColor:AppColor.warning,
           child: Icon(Icons.headphones,color:AppColor.background,size:20,),
         ),
-        title:IconButton(
-            onPressed: toggleAudio,
-            icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+        title:Row(
+          children: [
+            IconButton(
+                onPressed: toggleAudio,
+                icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LinearProgressIndicator(
+                    value: (duration != null && duration!.inMilliseconds > 0)
+                        ? position.inMilliseconds / duration!.inMilliseconds
+                        : 0,
+                    backgroundColor: Colors.grey.shade300,
+                    color: AppColor.warning,
+                    minHeight: 3,
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(formatDuration(position)),
+                      Text(formatDuration(duration)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        subtitle:Text(formatDuration(duration)),
+        subtitle:Text(extension),
       ),
     );
   }
