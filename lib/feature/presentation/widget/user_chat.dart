@@ -18,7 +18,7 @@ class UserChat extends StatelessWidget {
         bool isUser=currentUserId==msg.senderId;
         return Align(
           alignment: isUser?Alignment.centerRight: Alignment.centerLeft,
-          child: ChatMessage(msg: msg,)
+          child: ChatMessage(msg: msg,currentUserId: currentUserId,)
           );
       },
     );
