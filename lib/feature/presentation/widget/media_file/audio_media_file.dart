@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:chat_demo/core/constant/colour/app_color.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/constant/text_style/app_text_style.dart';
 import '../../../../core/widget/file_duration/file_duration.dart';
 
 class AudioMediaFile extends StatefulWidget {
@@ -76,7 +77,7 @@ class _AudioMediaFileState extends State<AudioMediaFile> {
           children: [
             IconButton(
                 onPressed: toggleAudio,
-                icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+                icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow , color: AppColor.scaffoldBackground,),
             ),
             Expanded(
               child: Column(
@@ -105,7 +106,7 @@ class _AudioMediaFileState extends State<AudioMediaFile> {
             ),
           ],
         ),
-        subtitle:Text(extension),
+        subtitle:Text(extension,style: AppTextStyles.captionMedium()),
       ),
     );
   }
