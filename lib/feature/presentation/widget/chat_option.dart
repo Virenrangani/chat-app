@@ -28,7 +28,7 @@ class ChatOption extends StatelessWidget {
       padding: AppPadding.edgeAll16,
       decoration: BoxDecoration(
         borderRadius: AppBorderRadius.verTop24,
-        color: AppColor.primaryLight,
+        color: AppColor.secondaryLight,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
