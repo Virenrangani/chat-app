@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/constant/text_style/app_text_style.dart';
 import '../../cubit/chat_cubit.dart';
 
 class AudioChat extends StatefulWidget {
@@ -19,6 +20,7 @@ class _AudioChatState extends State<AudioChat> {
       title: Text(
         context.read<ChatCubit>().file!.path.split('/').last,
         overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.h5(),
       ),
       subtitle:IconButton(onPressed: (){
         context.read<ChatCubit>().toggleAudio();
