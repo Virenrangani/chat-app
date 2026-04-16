@@ -1,3 +1,5 @@
+import 'package:chat_demo/core/constant/colour/app_color.dart';
+import 'package:chat_demo/core/constant/text_style/app_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
@@ -33,9 +35,12 @@ class _VideoChatState extends State<VideoChat> {
       children: [
         Column(
           children: [
-            SizedBox(
+            Container(
               width: double.infinity,
               height: 200,
+              decoration: BoxDecoration(
+                border: Border.all(width:1.2,color: AppColor.secondaryDark)
+              ),
               child: controller != null && controller.value.isInitialized
                   ? VideoPlayer(controller)
                   :  Center(child: CircularProgressIndicator()),
@@ -50,11 +55,13 @@ class _VideoChatState extends State<VideoChat> {
                     context.watch<ChatCubit>().isVideoPlaying
                         ? Icons.pause
                         : Icons.play_arrow,
+                    color: AppColor.primarySurface,
                   ),
                 ),
                 Text(
                   file.path.split('/').last,
                   overflow: TextOverflow.ellipsis,
+                  style:AppTextStyles.captionMedium(),
                 ),
               ],
             ),
