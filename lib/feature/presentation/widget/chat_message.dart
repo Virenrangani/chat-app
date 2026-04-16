@@ -35,8 +35,9 @@ enum MediaType {
 
 class ChatMessage extends StatelessWidget {
   final Message msg;
+  final String currentUserId;
 
-  const ChatMessage({super.key, required this.msg});
+  const ChatMessage({super.key, required this.msg, required this.currentUserId});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class ChatMessage extends StatelessWidget {
       margin: EdgeInsets.all(6),
       padding: AppPadding.edgeAll8,
       decoration: BoxDecoration(
-        color: AppColor.primary,
+        color:currentUserId==msg.senderId ? AppColor.primary:AppColor.primarySurface,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
