@@ -22,6 +22,7 @@ class DocumentMediaFile extends StatelessWidget {
         title: Text(
           file.path.split('/').last,
           overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.titleMedium(),
         ),
         subtitle: Row(
           mainAxisAlignment: MainAxisAlignment.start,
