@@ -1,3 +1,4 @@
+import 'package:chat_demo/core/constant/text_style/app_text_style.dart';
 import 'package:chat_demo/core/widget/file_extension_icon/file_extension_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +20,7 @@ class DocumentChat extends StatelessWidget {
       title: Text(
         file.path.split('/').last,
         overflow: TextOverflow.ellipsis,
+        style: AppTextStyles.h5(),
       ),
       subtitle: const Text("Tap to open"),
       onTap: () => OpenFilex.open(file.path),
