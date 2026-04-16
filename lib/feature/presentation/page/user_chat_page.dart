@@ -92,57 +92,70 @@ class _UserChatPageState extends State<UserChatPage> {
 
                 Padding(
                   padding: AppPadding.edgeAll20,
-                  child: AppFormField(
-                    controller: messageController,
-                    focusNode: messageFocusNode,
-                    prefixIcon: IconButton(
-                      onPressed: () {
-                        if (cubit.showEmoji) {
-                          cubit.toggleEmoji();
-                          messageFocusNode.requestFocus();
-                        } else {
-                          messageFocusNode.unfocus();
-                          cubit.toggleEmoji();
-                        }
-                      },
-                      icon: cubit.showEmoji
-                          ? const Icon(Icons.keyboard)
-                          : const Icon(Icons.emoji_emotions_outlined),
-                    ),
-                    suffix: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            final ChatCubit chatCubit=context.read<ChatCubit>();
-                            await showModalBottomSheet(
-                              context: context,
-                              builder: (context) =>
-                                  ChatOption(
-                                    onImagePicked: (file) => chatCubit.selectDocument(file, MediaType.image),
-                                    onAudioPicked: (file) => chatCubit.selectDocument(file, MediaType.audio),
-                                    onVideoPicked: (file) => chatCubit.selectDocument(file, MediaType.video),
-                                    onDocumentPicked: (file)=>chatCubit.selectDocument(file, MediaType.document),
-                                  ),
-                            );
-                          },
-                          icon: const Icon(Icons.attach_file),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            final text = messageController.text.trim();
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: AppFormField(
+                          hintText: "Message",
+                          controller: messageController,
+                          focusNode: messageFocusNode,
+                          prefixIcon: IconButton(
+                            onPressed: () {
+                              if (cubit.showEmoji) {
+                                cubit.toggleEmoji();
+                                messageFocusNode.requestFocus();
+                              } else {
+                                messageFocusNode.unfocus();
+                                cubit.toggleEmoji();
+                              }
+                            },
+                            icon: cubit.showEmoji
+                                ? const Icon(Icons.keyboard)
+                                : const Icon(Icons.emoji_emotions_outlined),
+                          ),
+                          suffix: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () async {
+                                  final ChatCubit chatCubit=context.read<ChatCubit>();
+                                  await showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) =>
+                                        ChatOption(
+                                          onImagePicked: (file) => chatCubit.selectDocument(file, MediaType.image),
+                                          onAudioPicked: (file) => chatCubit.selectDocument(file, MediaType.audio),
+                                          onVideoPicked: (file) => chatCubit.selectDocument(file, MediaType.video),
+                                          onDocumentPicked: (file)=>chatCubit.selectDocument(file, MediaType.document),
+                                        ),
+                                  );
+                                },
+                                icon: const Icon(Icons.attach_file),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  final text = messageController.text.trim();
 
-                            final hasFile = state.file!=null;
+                                  final hasFile = state.file!=null;
 
-                            if (text.isNotEmpty || hasFile) {
-                              context.read<ChatCubit>().sendMessage(text, currentUser.id);
-                              messageController.clear();
-                            }
-                          },
-                          icon: const Icon(Icons.send),
+                                  if (text.isNotEmpty || hasFile) {
+                                    context.read<ChatCubit>().sendMessage(text, currentUser.id);
+                                    messageController.clear();
+                                  }
+                                },
+                                icon: const Icon(Icons.send),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(width:10,),
+                      CircleAvatar(
+                        backgroundColor: AppColor.primaryDark,
+                        radius: 28,
+                        child: IconButton(onPressed: (){}, icon: Icon(Icons.mic,color: AppColor.scaffoldBackground,),),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
