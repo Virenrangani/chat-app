@@ -23,6 +23,7 @@ class UserChatPage extends StatefulWidget {
 class _UserChatPageState extends State<UserChatPage> {
   TextEditingController messageController = TextEditingController();
   late User currentUser;
+  final FocusNode messageFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -31,12 +32,21 @@ class _UserChatPageState extends State<UserChatPage> {
   }
 
   @override
+  void dispose() {
+    messageFocusNode.dispose();
+    messageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     return BlocProvider(
   create: (context) => GetIt.I<ChatCubit>(),
   child: Scaffold(
     backgroundColor: Colors.black,
-      appBar: AppBar(title: Text(currentUser.name)),
+    resizeToAvoidBottomInset: false,
+    appBar: AppBar(title: Text(currentUser.name)),
       body: BlocBuilder<ChatCubit, ChatState>(
 
         builder: (context, state) {
@@ -46,9 +56,15 @@ class _UserChatPageState extends State<UserChatPage> {
               children: [
 
                 Expanded(
-                  child: UserChat(
-                    messages: state.messages,
-                    currentUserId: currentUser.id,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (cubit.showEmoji) cubit.toggleEmoji();
+                      messageFocusNode.unfocus();
+                    },
+                    child: UserChat(
+                      messages: state.messages,
+                      currentUserId: currentUser.id,
+                    ),
                   ),
                 ),
 
@@ -58,10 +74,20 @@ class _UserChatPageState extends State<UserChatPage> {
                   padding: AppPadding.edgeAll20,
                   child: AppFormField(
                     controller: messageController,
-                    prefixIcon: IconButton(onPressed: (){
-                      FocusScope.of(context).unfocus();
-                      cubit.toggleEmoji();
-                    }, icon: cubit.showEmoji ?Icon(Icons.keyboard):Icon(Icons.emoji_emotions_outlined)
+                    focusNode: messageFocusNode,
+                    prefixIcon: IconButton(
+                      onPressed: () {
+                        if (cubit.showEmoji) {
+                          cubit.toggleEmoji();
+                          messageFocusNode.requestFocus();
+                        } else {
+                          messageFocusNode.unfocus();
+                          cubit.toggleEmoji();
+                        }
+                      },
+                      icon: cubit.showEmoji
+                          ? const Icon(Icons.keyboard)
+                          : const Icon(Icons.emoji_emotions_outlined),
                     ),
                     suffix: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -99,9 +125,8 @@ class _UserChatPageState extends State<UserChatPage> {
                     ),
                   ),
                 ),
-                AnimatedContainer(
-                  duration:  Duration(milliseconds: 200),
-                  height: cubit.showEmoji ? 250 : 0,
+                SizedBox(
+                  height: cubit.showEmoji ? 250 : keyboardHeight,
                   child: cubit.showEmoji ?
                   EmojiPicker(
                     textEditingController: messageController,
