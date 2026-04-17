@@ -53,7 +53,7 @@ class AppFormField extends StatelessWidget {
         filled: true,
         fillColor: Colors.grey.shade900,
         hintText: hintText,
-        hintStyle: AppTextStyles.h4(color: Colors.white70),
+        hintStyle: AppTextStyles.h4(color: Colors.white24),
         prefixIcon: prefixIcon != null
             ? Padding(
           padding: AppPadding.edgeAll4,
