@@ -12,18 +12,37 @@ class ChatTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+
         CircleAvatar(
-          radius:26,
-          backgroundColor: Colors.blue.shade200,
+          radius: 18,
+          backgroundColor: AppColor.primaryLight,
           child: Text(
-              user.name[0].toUpperCase(),
-              style: AppTextStyles.bodyLarge(color: AppColor.info)
+            (user.name[0]),
+            style: AppTextStyles.h4(color: AppColor.primaryDark)
           ),
         ),
+
         SizedBox(width: 10),
-        Text(
-          user.name,
-          style: AppTextStyles.h4(color: AppColor.scaffoldBackground),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            Text(
+              user.name,
+              style: AppTextStyles.h4(
+                color: AppColor.scaffoldBackground,
+              ),
+            ),
+
+            Text(
+              "online",
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 12,
+              ),
+            ),
+          ],
         ),
       ],
     );
