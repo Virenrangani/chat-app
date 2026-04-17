@@ -49,22 +49,30 @@ class _UserChatPageState extends State<UserChatPage> {
     backgroundColor: Colors.black,
     resizeToAvoidBottomInset: false,
     appBar: AppBar(
-        title: ChatTitle(user: currentUser),
+      backgroundColor: AppColor.primaryDark,
+      titleSpacing: 0,
+
+      title: ChatTitle(user: currentUser),
+
       actions: [
         IconButton(
-          icon: const Icon(Icons.videocam,color: AppColor.scaffoldBackground),
+          icon: const Icon(Icons.videocam, color: AppColor.scaffoldBackground),
           onPressed: () {},
         ),
         IconButton(
-          icon: const Icon(Icons.call,color: AppColor.scaffoldBackground),
+          icon: const Icon(Icons.call, color: AppColor.scaffoldBackground),
           onPressed: () {},
         ),
-        IconButton(
-          icon: const Icon(Icons.more_vert,color: AppColor.scaffoldBackground),
-          onPressed: () {},
+        PopupMenuButton<String>(
+          icon: const Icon(Icons.more_vert, color: AppColor.scaffoldBackground),
+          onSelected: (value) {},
+          itemBuilder: (context) => const [
+            PopupMenuItem(value: "view", child: Text("View Contact")),
+            PopupMenuItem(value: "media", child: Text("Media, links, docs")),
+            PopupMenuItem(value: "search", child: Text("Search")),
+          ],
         ),
       ],
-      backgroundColor: AppColor.primaryDark,
     ),
       body: BlocBuilder<ChatCubit, ChatState>(
 
