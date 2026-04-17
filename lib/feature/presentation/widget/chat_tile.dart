@@ -3,6 +3,7 @@ import 'package:chat_demo/core/constant/padding/app_padding.dart';
 import 'package:chat_demo/core/constant/text_style/app_text_style.dart';
 import 'package:chat_demo/feature/presentation/page/user_chat_page.dart';
 import 'package:flutter/material.dart';
+import '../../../core/util/date/app_date.dart';
 import '../../domain/entities/user.dart';
 
 class ChatTile extends StatelessWidget {
@@ -55,6 +56,31 @@ class ChatTile extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            SizedBox(width: 8),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+
+                Text(
+                    DateFormatter.hourMinuteFormat(DateTime.now()),
+                    style: AppTextStyles.captionMedium()
+                ),
+
+                SizedBox(height: 6),
+
+                Container(
+                  padding: AppPadding.edgeAll8,
+                  decoration: BoxDecoration(
+                    color: AppColor.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    "2",style: AppTextStyles.captionBold(color:AppColor.background),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
