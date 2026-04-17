@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../core/constant/colour/app_color.dart';
 import '../../../../core/constant/text_style/app_text_style.dart';
 
@@ -17,7 +15,7 @@ class ChatTitle extends StatelessWidget {
         iconButton((){}, Icons.camera_alt_outlined),
         CircleAvatar(
             radius: 18,
-            backgroundColor: Colors.blue.shade200,
+            backgroundColor: AppColor.primaryLight,
             child: Icon(Icons.person,)
         ),
       iconButton((){},Icons.more_vert_outlined)
@@ -27,6 +25,8 @@ class ChatTitle extends StatelessWidget {
 }
 Widget iconButton(VoidCallback onPressed,IconData icon){
   return IconButton(onPressed: onPressed,
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
       icon: Icon(icon, size: 20,
           color: AppColor.scaffoldBackground)
   );
