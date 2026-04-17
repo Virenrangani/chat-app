@@ -1,31 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../core/constant/colour/app_color.dart';
 import '../../../../core/constant/text_style/app_text_style.dart';
-import '../../../domain/entities/user.dart';
 
 class ChatTitle extends StatelessWidget {
-  final User user;
-  const ChatTitle({super.key, required this.user});
+  const ChatTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Expanded(child: Text("WhatsApp",
+            style: AppTextStyles.h3(color: AppColor.scaffoldBackground))),
+        iconButton((){}, Icons.currency_rupee),
+        iconButton((){}, Icons.camera_alt_outlined),
         CircleAvatar(
-          radius:26,
-          backgroundColor: Colors.blue.shade200,
-          child: Text(
-              user.name[0].toUpperCase(),
-              style: AppTextStyles.bodyLarge(color: AppColor.info)
-          ),
+            radius: 18,
+            backgroundColor: Colors.blue.shade200,
+            child: Icon(Icons.person,)
         ),
-        SizedBox(width: 10),
-        Text(
-          user.name,
-          style: AppTextStyles.h4(color: AppColor.scaffoldBackground),
-        ),
-      ],
+      iconButton((){},Icons.more_vert_outlined)
+    ]
     );
   }
+}
+Widget iconButton(VoidCallback onPressed,IconData icon){
+  return IconButton(onPressed: onPressed,
+      icon: Icon(icon, size: 20,
+          color: AppColor.scaffoldBackground)
+  );
 }
