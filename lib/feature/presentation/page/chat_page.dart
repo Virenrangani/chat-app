@@ -1,5 +1,6 @@
 import 'package:chat_demo/core/constant/colour/app_color.dart';
 import 'package:chat_demo/core/constant/padding/app_padding.dart';
+import 'package:chat_demo/core/widget/text_field/app_text_field.dart';
 import 'package:chat_demo/feature/presentation/widget/app_bar/chat_title.dart';
 import 'package:chat_demo/feature/presentation/widget/chat_list.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,15 @@ class ChatPage extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height:80,),
-                  ChatTitle()
+                  ChatTitle(),
+                  SizedBox(
+                    height:50,
+                    child: AppFormField(
+                      hintText: "Search",
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                  SizedBox(height:10,)
                 ],
               ),
             ),
