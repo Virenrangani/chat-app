@@ -3,7 +3,6 @@ import 'package:chat_demo/core/constant/padding/app_padding.dart';
 import 'package:chat_demo/core/constant/text_style/app_text_style.dart';
 import 'package:chat_demo/feature/presentation/page/user_chat_page.dart';
 import 'package:flutter/material.dart';
-import '../../../core/util/date/app_date.dart';
 import '../../domain/entities/user.dart';
 
 class ChatTile extends StatelessWidget {
@@ -36,7 +35,27 @@ class ChatTile extends StatelessWidget {
             ),
 
             SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
+                  Text(
+                      user.name,
+                      style: AppTextStyles.bodyLarge(color:AppColor.scaffoldBackground)
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  Text(
+                      "Hey! How are you?",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyles.captionMedium()
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
